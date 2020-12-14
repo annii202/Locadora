@@ -6,7 +6,6 @@ class Pessoa
 private:
     int codigo;
     string nome;
-    string endereco;
     string dataNascimento;
     string telefone;
 
@@ -14,8 +13,6 @@ public:
     Pessoa();
     string getNome();
     void setNome(string n);
-    string getEndereco();
-    void setEndereco(string e);
     string getDataNascimento();
     void setDataNascimento(string d);
     string getTelefone();
@@ -32,14 +29,6 @@ string Pessoa::getNome()
 void Pessoa::setNome(string n)
 {
     nome = n;
-}
-string Pessoa::getEndereco()
-{
-    return endereco;
-}
-void Pessoa::setEndereco(string e)
-{
-    endereco = e;
 }
 string Pessoa::getDataNascimento()
 {

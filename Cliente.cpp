@@ -2,16 +2,19 @@
 #include <string>
 #include "Pessoa.cpp"
 using namespace std;
-class Aluno : public Pessoa
+class Cliente : public Pessoa
 {
-private:
-    string curso;
-    string semestre;
-
-public:
-    Aluno();
-    string getCurso();
-    void setCurso(string c);
-    string getSemestre();
-    void setSemestre(string s);
+    private:
+    string endereco;
+    public:
+    string getEndereco();
+    void setEndereco(string e);
 };
+string Cliente::getEndereco()
+{
+    return endereco;
+}
+void Cliente::setEndereco(string e)
+{
+    endereco = e;
+}
