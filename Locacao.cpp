@@ -4,10 +4,11 @@
 
 using namespace std;
 
-class Locacao :: public Cliente{
+class Locacao : public Cliente{
     static int locacoes;
     private:
-        int diasAlocados;
+        int diasAlocados, codigoAloc, Retirada, Devolucao;
+        bool Seguro;
 
     public:
         Locacao();
@@ -24,9 +25,9 @@ Locacao::~Locacao() {
     locacoes--;
 }
 
-int Pessoa::getDiasAlocados() {
+int Locacao::getDiasAlocados() {
     return diasAlocados;
 }
-void Pessoa::setDiasAlocados(int d) {
+void Locacao::setDiasAlocados(int d) {
     diasAlocados = d;
 }
