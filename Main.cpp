@@ -1,9 +1,12 @@
 #include <iostream>
 #include <string>
+#include <stdlib.h>
+
 // #include "Locacao.cpp"
 #include "Cliente.cpp"
 
 void CriaArquivo();
+void calculaPontosFidelidade();
 Cliente c;
 int main(){
 
@@ -46,4 +49,41 @@ void CriaArquivo(){
         // fprintf(arquivo, "\n");
     } 
     fclose(arquivo);   
+}
+
+void calculaPontosFidelidade(int codigoPessoa) {
+    Cliente c;
+    Locacao l;
+    int pontosAcumulados = 0;
+
+    for(int i = 0; i < l.lenght; i++) {
+        if(l[i].getCodigo == codigoPessoa) {
+            pontosAcumulados += (l[i].getDiasAlocados() * 10);
+        }
+    }
+
+    c.setPontosFidelidade(pontosAcumulados);
+    if(pontosAcumulados >= 500) {
+        cout << "O cliente de código " << codigoPessoa << " possui " << pontosAcumulados << " pontos de fidelidade e está hábil a ganhar o kit!" << endl;
+    }
+}
+
+void pesquisaClientesPremiados() {
+    Cliente c;
+    int codigoCliePremiado[c.lenght], contador = 0;
+
+    for(int i = 0; i < c.lenght; i++) {
+        if(c[i].getPontosFidelidade() >= 500) {
+            codigoCliePremiado[contador] = c[i].getCodigoClie();
+        }
+    }
+
+    if(codigoCliePremiado[0] != null) {
+        cout << "Os clientes que possuem pontuação de fidelidade maior que 500 são:" << endl;
+        for(int cont = 0; cont < codigoCliePremiado.lenght; cont++) {
+            cout << "Cliente de código: " << codigoCliePremiado[cont] << endl;
+        }
+    }
+    system("pause");
+    system("cls");
 }

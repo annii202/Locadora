@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <stdlib.h>
+
 using namespace std;
 class Pessoa
 {
@@ -19,6 +21,7 @@ public:
     void setDataNascimento(string d);
     string getTelefone();
     void setTelefone(string t);
+    void pesquisaCliente(string nome);
 };
 Pessoa::Pessoa()
 {
@@ -55,4 +58,12 @@ int Pessoa::getCodigo()
 void Pessoa::setCodigo(int c)
 {
     codigo = c;
+}
+
+void Pessoa::imprimeDadosPessoa() {
+    cout << "Código de Pessoa: " << getCodigo() << endl;
+    cout << "Nome da Pessoa: " << getNome() << endl;
+    cout << "Data de nascimento da Pessoa: " << getDataNascimento() << endl;
+    cout << "Telefone da Pessoa: " << getTelefone() << endl;
+    system("pause");
 }
