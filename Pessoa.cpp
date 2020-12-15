@@ -11,6 +11,8 @@ private:
 
 public:
     Pessoa();
+    int getCodigo();
+    void setCodigo(int c);
     string getNome();
     void setNome(string n);
     string getDataNascimento();
@@ -45,4 +47,12 @@ string Pessoa::getTelefone()
 void Pessoa::setTelefone(string t)
 {
     telefone = t;
+}
+int Pessoa::getCodigo()
+{
+    return codigo;
+}
+void Pessoa::setCodigo(int c)
+{
+    codigo = c;
 }
