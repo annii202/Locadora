@@ -4,23 +4,25 @@
 
 #include "Locacao.cpp"
 #include "Cliente.cpp"
+#include "Carro.cpp"
 
 void CriaArquivo();
 void calculaPontosFidelidade();
 Cliente c;
+Carro car;
 int main()
 {
-    int codigo;
-    string nome, endereco, telefone, dataNascimento;
+    int codigo, ocupantes;
+    string nome, endereco, telefone, dataNascimento, placa, descricao, cor, modelo;
     int condicao;
     do
     {
         cout << "Bem vinde a Locadora Loca Mais!! \n";
         cout << "Escolha o processo que você deseja realizar \n";
         cout << "1. Cadastrar cliente";
-        cout << "1. Cadastrar funcionário";
-        cout << "1. Cadastrar um carro";
-        cout << "1. Cadastrar uma locacao";
+        cout << "2. Cadastrar funcionário";
+        cout << "3. Cadastrar um carro";
+        cout << "4. Cadastrar uma locacao";
         cout << "5. Dar baixa em uma locacao:";
         cout << "6. Mostra locacoes de um cliente";
         cout << "7. Pesquisar funcionário";
@@ -53,6 +55,35 @@ int main()
             fflush(stdin);
             CriaArquivo();
             break;
+        case 2:
+        break;
+
+        case 3:
+            cout << "Digite o codigo do carro: ";
+            cin >> codigo;
+            car.setCodigo(codigo);
+            cout << "Digite o numero de acentos do carro: ";
+            cin >> ocupantes;
+            car.setOcupantes(ocupantes);
+            cout << "Digite a Placa do carro: ";
+            cin >> placa;
+            car.setPlaca(placa);
+            fflush(stdin);
+            cout << "Digite a descricao do carro: ";
+            cin >> descricao;
+            car.setDescricao(descricao);
+            fflush(stdin);
+            cout << "Digite o modelo do carro: ";
+            cin >> modelo;
+            car.setModelo(modelo);
+            cout << "Digite a cor do carro: ";
+            cin >> cor;
+            car.setCor(cor);
+            car.getStatus(1);
+            fflush(stdin);
+            CriaArquivo();
+            break;
+        break;
 
         default:
             break;
@@ -62,16 +93,30 @@ int main()
 
 void CriaArquivo()
 {
-    FILE *arquivo;
-    if ((arquivo = fopen("arquivo.txt", "a")) == NULL)
+    FILE *clientes;
+    if ((clientes = fopen("cliente.txt", "a")) == NULL)
     {
         printf("Erro de abertura! \n");
     }
     else
     {
-        fprintf(arquivo, "%d;%s;%s;%s;%s \n", c.getCodigo(), c.getNome().c_str(), c.getTelefone().c_str(), c.getEndereco().c_str(), c.getDataNascimento().c_str());
+        fprintf(clientes, "%d;%s;%s;%s;%s \n", c.getCodigo(), c.getNome().c_str(), c.getTelefone().c_str(), c.getEndereco().c_str(), c.getDataNascimento().c_str());
     }
-    fclose(arquivo);
+    fclose(clientes);
+}
+void CriaArquivo()
+{
+    FILE *carros;
+    if ((carros = fopen("carro.txt", "a")) == NULL)
+    {
+        printf("Erro de abertura! \n");
+    }
+    else
+    {
+        fprintf(carros, "%d;%d;%s;%s;%s;%s;%s;%d \n", car.getCodigo(), car.getOcupantes(), car.getPlaca().c_str(),
+        car.getModelo().c_str(), car.getDescricao().c_str(), car.getCor().c_str(), car.getStatus());
+    }
+    fclose(carros);
 }
 
 // void calculaPontosFidelidade(int codigoPessoa) {
