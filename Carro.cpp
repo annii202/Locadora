@@ -16,13 +16,13 @@ public:
     int getOcupantes();
     void setOcupantes(int o);
     string getPlaca();
-    void setPlaca(int p);
+    void setPlaca(string p);
     string getDescricao();
-    void setDescricao(int d);
+    void setDescricao(string d);
     string getModelo();
-    void setModelo(int m);
+    void setModelo(string m);
     string getCor();
-    void setCor(int co);
+    void setCor(string co);
     bool getStatus();
     void setStatus(bool s);
 };
@@ -41,25 +41,25 @@ void Carro::setOcupantes(int o){
 string Carro::getPlaca(){
     return placa;
 }
-void Carro::setPlaca(int p){
+void Carro::setPlaca(string p){
     placa = p;
 }
 string Carro::getDescricao(){
     return descricao;
 }
-void Carro::setDescricao(int d){
+void Carro::setDescricao(string d){
     descricao = d;
 }
 string Carro::getModelo(){
     return modelo;
 }
-void Carro::setModelo(int m){
+void Carro::setModelo(string m){
     modelo = m;
 }
 string Carro::getCor(){
     return cor;
 }
-void Carro::setCor(int co){
+void Carro::setCor(string co){
     cor = co;
 }
 bool Carro::getStatus(){

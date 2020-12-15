@@ -7,13 +7,15 @@
 #include "Carro.cpp"
 
 void CriaArquivo();
+void CriaArquivoCarro();
 void calculaPontosFidelidade();
 Cliente c;
 Carro car;
 int main()
 {
     int codigo, ocupantes;
-    string nome, endereco, telefone, dataNascimento, placa, descricao, cor, modelo;
+    string nome, endereco, telefone, dataNascimento, placa;
+    string descricao, cor, modelo;
     int condicao;
     do
     {
@@ -76,12 +78,14 @@ int main()
             cout << "Digite o modelo do carro: ";
             cin >> modelo;
             car.setModelo(modelo);
+            fflush(stdin);
             cout << "Digite a cor do carro: ";
             cin >> cor;
             car.setCor(cor);
-            car.getStatus(1);
             fflush(stdin);
-            CriaArquivo();
+            car.setStatus(true);
+            fflush(stdin);
+            CriaArquivoCarro();
             break;
         break;
 
@@ -104,7 +108,7 @@ void CriaArquivo()
     }
     fclose(clientes);
 }
-void CriaArquivo()
+void CriaArquivoCarro()
 {
     FILE *carros;
     if ((carros = fopen("carro.txt", "a")) == NULL)
@@ -113,7 +117,7 @@ void CriaArquivo()
     }
     else
     {
-        fprintf(carros, "%d;%d;%s;%s;%s;%s;%s;%d \n", car.getCodigo(), car.getOcupantes(), car.getPlaca().c_str(),
+        fprintf(carros, "%d;%d;%s;%s;%s;%s;%d \n", car.getCodigo(), car.getOcupantes(), car.getPlaca().c_str(),
         car.getModelo().c_str(), car.getDescricao().c_str(), car.getCor().c_str(), car.getStatus());
     }
     fclose(carros);
