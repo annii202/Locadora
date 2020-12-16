@@ -5,33 +5,38 @@
 #include "Locacao.cpp"
 #include "Cliente.cpp"
 #include "Carro.cpp"
+#include "cadastraFuncionario.cpp"
 
 void CriaArquivo();
 void CriaArquivoCarro();
-void calculaPontosFidelidade();
+void CriaArquivoFuncionario();
+void calculaPontosFidelidade(FILE *arquivo, string codClie);
+void pesquisaClientesPremiados(FILE *arquivo);
+
 Cliente c;
-Carro car;
+CadFuncionario f;
+Locacao l;
+
 int main()
 {
-    int codigo, ocupantes;
-    string nome, endereco, telefone, dataNascimento, placa;
-    string descricao, cor, modelo;
+    int codigo, codClie, codFunc;
+    string nome, endereco, telefone, dataNascimento;
     int condicao;
     do
     {
-        cout << "Bem vinde a Locadora Loca Mais!! \n";
-        cout << "Escolha o processo que você deseja realizar \n";
-        cout << "1. Cadastrar cliente";
-        cout << "2. Cadastrar funcionário";
-        cout << "3. Cadastrar um carro";
-        cout << "4. Cadastrar uma locacao";
-        cout << "5. Dar baixa em uma locacao:";
-        cout << "6. Mostra locacoes de um cliente";
-        cout << "7. Pesquisar funcionário";
-        cout << "8. Pesquisar cliente";
-        cout << "9. Pontos de fidelidade";
-        cout << "10. Sair...";
-        cin >> condicao; 
+        cout << "Bem vinde a Locadora Loca Mais!!" << endl;
+        cout << "Escolha o processo que você deseja realizar" << endl;
+        cout << "1. Cadastrar cliente" << endl;
+        cout << "2. Cadastrar funcionário" << endl;
+        cout << "3. Cadastrar um carro" << endl;
+        cout << "4. Cadastrar uma locacao" << endl;
+        cout << "5. Dar baixa em uma locacao:" << endl;
+        cout << "6. Mostra locacoes de um cliente" << endl;
+        cout << "7. Pesquisar funcionário" << endl;
+        cout << "8. Pesquisar cliente" << endl;
+        cout << "9. Calcular pontos de fidelidade" << endl;
+        cout << "10. Sair..." << endl;
+        cin >> condicao;
         switch (condicao)
         {
         case 1:
@@ -59,6 +64,7 @@ int main()
             CriaArquivo();
             break;
         case 2:
+            CriaArquivoFuncionário();
         break;
 
         case 3:
@@ -88,8 +94,36 @@ int main()
             fflush(stdin);
             CriaArquivoCarro();
             break;
-        break;
-
+        case 7:
+            FILE *funcionarios;
+            if ((funcionarios = fopen("salvarFuncionario.txt", "r")) == NULL) {
+                printf("Erro de abertura! \n");
+            } else {
+                cout << "Digite o código de funcionário que deseja buscar:" << endl;
+                cin >> codFunc;
+                calculaPontosFidelidade(funcionarios, codFunc);
+            }
+            break;
+        case 8:
+            FILE *clientes;
+            if ((clientes = fopen("cliente.txt", "a")) == NULL) {
+                printf("Erro de abertura! \n");
+            } else {
+                cout << "Digite o código de cliente que deseja buscar:" << endl;
+                cin >> codClie;
+                calculaPontosFidelidade(clientes, codClie);
+            }
+            break;
+        case 9:
+            FILE *clientes;
+            if ((clientes = fopen("cliente.txt", "r")) == NULL) {
+                printf("Erro de abertura! \n");
+            } else {
+                cout << "Digite o código de cliente que deseja calcular os Pontos de Fidelidade" << endl;
+                cin >> codClie;
+                calculaPontosFidelidade(clientes, codClie);
+            }
+            break;
         default:
             break;
         }
@@ -124,39 +158,134 @@ void CriaArquivoCarro()
     fclose(carros);
 }
 
-// void calculaPontosFidelidade(int codigoPessoa) {
-//     Cliente c;
-//     Locacao l;
-//     int pontosAcumulados = 0;
+void CriaArquivoFuncionario() {
+    FILE *salvaFunc;
+    FILE *salvaCodigo;
+    CadFuncionario *f;
+    f = new(CadFuncionario);
+    char nome[50],telefone[50];
+    int codigo,cod,aux=0;
+    float salario;
+    cout << "Diga o nome do funcionário:\n";
+    fflush(stdin);
+    gets(nome);
+    f->setNome(nome);
+    cout << "O código do funcionário é: " <<endl;
+    cin >> codigo;
+    f->setCodigoFunc(codigo);
+    if ((salvaCodigo=fopen("salvarCodigo.txt","a"))==NULL)
+    {
+        cout << "Erro!\n";
+    }
+    else
+    {
+        for (int i=0; i<100; i++)
+        {
+            fscanf(salvaCodigo,"%i",&cod);
+            if (f->getCodigoFunc() == cod)
+            {
+                cout << "Código já existente\n";
+                aux=1;
+            }
+        }
+        if (aux != 1)
+        {
+            f->setCodigoFunc(codigo);
+            fprintf(salvaCodigo,"%i\n",f->getCodigoFunc());
+        }
+    }
+    fclose(salvaCodigo);
+    cout << "Digite o telefone do funcionário:"<< endl;
+    fflush(stdin);
+    gets(telefone);
+    f->setTelefone(telefone);
+    cout << "Digite o salário do funcionário:"<< endl;
+    cin >> salario;
+    f->setSalario(salario);
+    if ((salvaFunc = fopen("salvarFuncionario.txt","a")) == NULL)
+    {
+        cout << "Erro\n";
+    }
+    else
+    {
+        if (aux != 1){
+        fprintf(salvaFunc,"%s\n",f->getNome().c_str());
+        fprintf(salvaFunc,"%s\n",f->getTelefone().c_str());
+        fprintf(salvaFunc,"%.2f\n",f->getSalario());
+        cout << "Código: ";
+        cout << f->getCodigoFunc()<<endl;
+        cout << "Nome: ";
+        cout << f->getNome()<<endl;
+        cout << "Salário: ";
+        cout << f->getSalario()<<endl;
+        cout << "Telefone: ";
+        cout << f->getTelefone()<<endl;
+        }
+    }
+    fclose(salvaFunc);
+}
 
-//     for(int i = 0; i < l.lenght; i++) {
-//         if(l[i].getCodigo == codigoPessoa) {
-//             pontosAcumulados += (l[i].getDiasAlocados() * 10);
-//         }
-//     }
+void calculaPontosFidelidade(FILE *arquivo, string codClie) {
+    int pontosAcumulados = 0;
 
-//     c.setPontosFidelidade(pontosAcumulados);
-//     if(pontosAcumulados >= 500) {
-//         cout << "O cliente de código " << codigoPessoa << " possui " << pontosAcumulados << " pontos de fidelidade e está hábil a ganhar o kit!" << endl;
-//     }
-// }
+    fseek(f,0,SEEK_SET);
+    fread(&l, sizeof(l), 1, arquivo);
+    
+    while(!feof(arquivo)) {
+        if(l.codigoClie.compare(codClie) == 0) {
+            pontosAcumulados += (l.diasAlocados() * 10);
+        }
+        fread(&l, sizeof(l), 1, arquivo);
+    }
 
-// void pesquisaClientesPremiados() {
-//     Cliente c;
-//     int codigoCliePremiado[c.lenght], contador = 0;
+    c.setPontosFidelidade(pontosAcumulados);
+    if(pontosAcumulados >= 500) {
+        cout << "O cliente de código " << codClie << " possui " << pontosAcumulados << " pontos de fidelidade e está hábil a ganhar o kit!" << endl;
+    }
+}
 
-//     for(int i = 0; i < c.lenght; i++) {
-//         if(c[i].getPontosFidelidade() >= 500) {
-//             codigoCliePremiado[contador] = c[i].getCodigoClie();
-//         }
-//     }
+void pesquisaClientesPremiados(FILE *arquivo) {
+    int codigoCliePremiado[c.lenght], contador = 0, existe = 0;
 
-//     if(codigoCliePremiado[0] != null) {
-//         cout << "Os clientes .que possuem pontuação de fidelidade maior que 500 são:" << endl;
-//         for(int cont = 0; cont < codigoCliePremiado.lenght; cont++) {
-//             cout << "Cliente de código: " << codigoCliePremiado[cont] << endl;
-//         }
-//     }
-//     system("pause");
-//     system("cls");
-// }
+    fseek(f,0,SEEK_SET);
+    fread(&l, sizeof(l), 1, arquivo);
+    
+    while(!feof(arquivo)) {
+        if(c.pontosFidelidade() >= 500) {
+            codigoCliePremiado[contador] = c.codigoClie();
+            existe = 1;
+        }
+    }
+
+    if(existe == 1) {
+        cout << "Os clientes que possuem pontuação de fidelidade maior que 500 são:" << endl;
+        for(int cont = 0; cont < codigoCliePremiado.lenght; cont++) {
+            if(codigoCliePremiado[cont] !== null && codigoCliePremiado[cont] !== 'undefined') {
+                cout << "Cliente de código: " << codigoCliePremiado[cont] << endl;
+            }
+        }
+    }
+    system("pause");
+    system("cls");
+}
+
+void imprimeDados(int funcClie) {
+    if(funcClie == 1) { //1 para Funcionário, 2 para Cliente
+        cout << "Imprimindo dados do Funcionário." << endl;
+        cout << "Nome:" << f.getNome() << endl;
+        cout << "Data de nascimento:" << f.getDataNascimento() << endl;
+        cout << "Telefone: " << f.getTelefone() << endl;
+        cout << "Código de Funcionário: " << f.getCodigoFunc() << endl;
+        cout << "Salário: " << f.getSalario() << endl;
+    } else if(funcClie == 2){
+        cout << "Imprimindo dados do Cliente." << endl;
+        cout << "Nome:" << c.getNome() << endl;
+        cout << "Data de nascimento:" << c.getDataNascimento() << endl;
+        cout << "Telefone: " << c.getTelefone() << endl;
+        cout << "Código de Cliente: " << c.getCodigoClie() << endl;
+        cout << "Pontos de Fidelidade: " << c.getPontosFidelidade() << endl;
+        cout << "Endereço: " << c.getEndereco() << endl;
+    }
+    system("pause");
+    system("cls");
+}

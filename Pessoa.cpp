@@ -60,10 +60,3 @@ void Pessoa::setCodigo(int c)
     codigo = c;
 }
 
-// void Pessoa::imprimeDadosPessoa() {
-//     cout << "Código de Pessoa: " << getCodigo() << endl;
-//     cout << "Nome da Pessoa: " << getNome() << endl;
-//     cout << "Data de nascimento da Pessoa: " << getDataNascimento() << endl;
-//     cout << "Telefone da Pessoa: " << getTelefone() << endl;
-//     system("pause");
-// }
