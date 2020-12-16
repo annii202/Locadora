@@ -6,21 +6,26 @@
 #include "Cliente.cpp"
 #include "Carro.cpp"
 #include "cadastraFuncionario.cpp"
+#include "CLocacao.cpp"
 
 void CriaArquivo();
 void CriaArquivoCarro();
 void CriaArquivoFuncionario();
 void calculaPontosFidelidade(FILE *arquivo, string codClie);
 void pesquisaClientesPremiados(FILE *arquivo);
+void FazLocacao(string nome);
 
 Cliente c;
+Carro car;
 CadFuncionario f;
 Locacao l;
+CLocacao cl;
 
 int main()
 {
-    int codigo, codClie, codFunc;
+    int codigo, codClie, codFunc, ocupantes;
     string nome, endereco, telefone, dataNascimento;
+    string descricao, cor, modelo, placa;
     int condicao;
     do
     {
@@ -64,7 +69,7 @@ int main()
             CriaArquivo();
             break;
         case 2:
-            CriaArquivoFuncionário();
+            CriaArquivoFuncionario();
         break;
 
         case 3:
@@ -94,6 +99,12 @@ int main()
             fflush(stdin);
             CriaArquivoCarro();
             break;
+        case 4:
+            cout << "Informe seu nome: ";
+            cin >> nome;
+            FazLocacao(nome);
+            break;
+        break;
         case 7:
             FILE *funcionarios;
             if ((funcionarios = fopen("salvarFuncionario.txt", "r")) == NULL) {
@@ -288,4 +299,53 @@ void imprimeDados(int funcClie) {
     }
     system("pause");
     system("cls");
+}
+void FazLocacao(string nome)
+{
+    int id, l, di, qntd, entrada, saida, locacao;
+    string p, m, d, c;
+    bool seg;
+    FILE *carros;
+    if ((carros = fopen("carro.txt", "r")) == NULL)
+    {
+        printf("Erro de abertura! \n");
+    }
+    else
+    {
+        fscanf(carros, "%d", &id);
+        fscanf(carros, "%d", &l);
+        fscanf(carros, "%s", &p);
+        fscanf(carros, "%s", &m);
+        fscanf(carros, "%s", &d);
+        fscanf(carros, "%s", &c);
+        fscanf(carros, "%d", &di);
+        fclose(carros);
+    }
+    cout << "informe a quantidade de Pessoas";
+    cin >> qntd;
+    if (qntd == l)
+    {
+        cout << "Informe o dia de entrada: ";
+        cin >> entrada;
+        cl.setRetirada(entrada);
+        cout << "Informe o dia de saida: ";
+        cin >> saida;
+        cl.setDevolucao(saida);
+        cout << "Informe o codigo da locacao: ";
+        cin >> locacao;
+        cl.setCod(locacao);
+        cout << "Vai ter seguro? 1- sim, 0 nao";
+        cin >> seg;
+        cl.setSeguro(seg);
+        FILE *locacao;
+        if ((locacao = fopen("locacao.txt", "a")) == NULL)
+        {
+            printf("Erro de abertura! \n");
+        }
+        else
+        {
+            fprintf(locacao, "%s%d%d%d", nome, car.getCodigo(), cl.GetQntdDias(), cl.getSeguro());
+        }
+        fclose(locacao);
+    }
 }
