@@ -31,6 +31,7 @@ int main()
         cout << "8. Pesquisar cliente";
         cout << "9. Pontos de fidelidade";
         cout << "10. Sair...";
+        cin >> condicao; 
         switch (condicao)
         {
         case 1:
@@ -151,7 +152,7 @@ void CriaArquivoCarro()
 //     }
 
 //     if(codigoCliePremiado[0] != null) {
-//         cout << "Os clientes que possuem pontuação de fidelidade maior que 500 são:" << endl;
+//         cout << "Os clientes .que possuem pontuação de fidelidade maior que 500 são:" << endl;
 //         for(int cont = 0; cont < codigoCliePremiado.lenght; cont++) {
 //             cout << "Cliente de código: " << codigoCliePremiado[cont] << endl;
 //         }

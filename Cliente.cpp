@@ -9,6 +9,7 @@ class Cliente : public Pessoa {
         string endereco;
         int pontosFidelidade;
     public:
+        Cliente();
         string getEndereco();
         void setEndereco(string e);
         string getCodigoClie();
@@ -18,6 +19,9 @@ class Cliente : public Pessoa {
 
 };
 
+Cliente::Cliente(){
+    cout << "Executando";
+}
 string Cliente::getEndereco() {
     return endereco;
 }

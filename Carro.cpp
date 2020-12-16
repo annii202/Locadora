@@ -26,6 +26,9 @@ public:
     bool getStatus();
     void setStatus(bool s);
 };
+Carro:: Carro(){
+    cout<< "Rodando";
+}
 int Carro::getCodigo(){
     return cod;
 }
